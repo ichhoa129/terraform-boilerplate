@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "backend_bucket" {
-    bucket = var.backend_bucket_name
+    bucket = format("%s-%s-%s", var.project, var.environment, var.backend_bucket_name)
     versioning {
         enabled = true
     }
@@ -14,6 +14,7 @@ resource "aws_s3_bucket" "backend_bucket" {
         object_lock_enabled = "Enabled"
     }
     tags = {
-        Name = "S3 Remote Terraform State Store"
+        Project = var.project
+        Environment = var.environment
     }
 }
